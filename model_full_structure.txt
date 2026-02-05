@@ -1,0 +1,379 @@
+Qwen3OmniMoeForConditionalGeneration(
+  (thinker): Qwen3OmniMoeThinkerForConditionalGeneration(
+    (audio_tower): Qwen3OmniMoeAudioEncoder(
+      (positional_embedding): SinusoidsPositionEmbedding()
+      (layers): ModuleList(
+        (0-31): 32 x Qwen3OmniMoeAudioEncoderLayer(
+          (self_attn): Qwen3OmniMoeAudioAttention(
+            (k_proj): Linear(in_features=1280, out_features=1280, bias=True)
+            (v_proj): Linear(in_features=1280, out_features=1280, bias=True)
+            (q_proj): Linear(in_features=1280, out_features=1280, bias=True)
+            (out_proj): Linear(in_features=1280, out_features=1280, bias=True)
+          )
+          (self_attn_layer_norm): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+          (activation_fn): GELUActivation()
+          (fc1): Linear(in_features=1280, out_features=5120, bias=True)
+          (fc2): Linear(in_features=5120, out_features=1280, bias=True)
+          (final_layer_norm): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+        )
+      )
+      (ln_post): LayerNorm((1280,), eps=1e-05, elementwise_affine=True)
+      (conv2d1): Conv2d(1, 480, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (conv2d2): Conv2d(480, 480, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (conv2d3): Conv2d(480, 480, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+      (conv_out): Linear(in_features=7680, out_features=1280, bias=False)
+      (proj1): Linear(in_features=1280, out_features=1280, bias=True)
+      (act): GELUActivation()
+      (proj2): Linear(in_features=1280, out_features=2048, bias=True)
+    )
+    (visual): Qwen3OmniMoeVisionEncoder(
+      (merger_list): ModuleList(
+        (0-2): 3 x Qwen3OmniMoeVisionPatchMerger(
+          (ln_q): LayerNorm((4608,), eps=1e-06, elementwise_affine=True)
+          (mlp): ModuleList(
+            (0): Linear(in_features=4608, out_features=4608, bias=True)
+            (1): GELU(approximate='none')
+            (2): Linear(in_features=4608, out_features=2048, bias=True)
+          )
+        )
+      )
+      (patch_embed): Qwen3OmniMoeVisionPatchEmbed(
+        (proj): Conv3d(3, 1152, kernel_size=(2, 16, 16), stride=(2, 16, 16))
+      )
+      (pos_embed): Embedding(2304, 1152)
+      (rotary_pos_emb): Qwen3OmniMoeVisionRotaryEmbedding()
+      (blocks): ModuleList(
+        (0-26): 27 x Qwen3OmniMoeVisionBlock(
+          (norm1): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
+          (norm2): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
+          (attn): Qwen3OmniMoeVisionAttention(
+            (qkv): Linear(in_features=1152, out_features=3456, bias=True)
+            (proj): Linear(in_features=1152, out_features=1152, bias=True)
+          )
+          (mlp): Qwen3OmniMoeVisionMLP(
+            (linear_fc1): Linear(in_features=1152, out_features=4304, bias=True)
+            (linear_fc2): Linear(in_features=4304, out_features=1152, bias=True)
+            (act_fn): GELUTanh()
+          )
+        )
+      )
+      (merger): Qwen3OmniMoeVisionPatchMerger(
+        (ln_q): LayerNorm((1152,), eps=1e-06, elementwise_affine=True)
+        (mlp): ModuleList(
+          (0): Linear(in_features=4608, out_features=4608, bias=True)
+          (1): GELU(approximate='none')
+          (2): Linear(in_features=4608, out_features=2048, bias=True)
+        )
+      )
+    )
+    (model): Qwen3OmniMoeThinkerTextModel(
+      (embed_tokens): Embedding(152064, 2048)
+      (layers): ModuleList(
+        (0-47): 48 x Qwen3OmniMoeThinkerTextDecoderLayer(
+          (self_attn): Qwen3OmniMoeThinkerTextAttention(
+            (q_proj): Linear(in_features=2048, out_features=4096, bias=False)
+            (k_proj): Linear(in_features=2048, out_features=512, bias=False)
+            (v_proj): Linear(in_features=2048, out_features=512, bias=False)
+            (o_proj): Linear(in_features=4096, out_features=2048, bias=False)
+            (q_norm): Qwen3OmniMoeThinkerTextRMSNorm((128,), eps=1e-06)
+            (k_norm): Qwen3OmniMoeThinkerTextRMSNorm((128,), eps=1e-06)
+          )
+          (mlp): Qwen3OmniMoeThinkerTextSparseMoeBlock(
+            (experts): Qwen3OmniMoeThinkerTextExperts(
+              (act_fn): SiLUActivation()
+            )
+            (gate): Qwen3OmniMoeThinkerTextTopKRouter()
+          )
+          (input_layernorm): Qwen3OmniMoeThinkerTextRMSNorm((2048,), eps=1e-06)
+          (post_attention_layernorm): Qwen3OmniMoeThinkerTextRMSNorm((2048,), eps=1e-06)
+        )
+      )
+      (norm): Qwen3OmniMoeTextRMSNorm((2048,), eps=1e-06)
+      (rotary_emb): Qwen3OmniMoeThinkerTextRotaryEmbedding()
+    )
+    (lm_head): Linear(in_features=2048, out_features=152064, bias=False)
+  )
+  (talker): Qwen3OmniMoeTalkerForConditionalGeneration(
+    (model): Qwen3OmniMoeTalkerModel(
+      (layers): ModuleList(
+        (0-19): 20 x Qwen3OmniMoeTalkerDecoderLayer(
+          (self_attn): Qwen3OmniMoeThinkerTextAttention(
+            (q_proj): Linear(in_features=1024, out_features=2048, bias=False)
+            (k_proj): Linear(in_features=1024, out_features=256, bias=False)
+            (v_proj): Linear(in_features=1024, out_features=256, bias=False)
+            (o_proj): Linear(in_features=2048, out_features=1024, bias=False)
+            (q_norm): Qwen3OmniMoeThinkerTextRMSNorm((128,), eps=1e-06)
+            (k_norm): Qwen3OmniMoeThinkerTextRMSNorm((128,), eps=1e-06)
+          )
+          (mlp): Qwen3OmniMoeTalkerTextSparseMoeBlock(
+            (gate): Qwen3OmniMoeTalkerTextTopKRouter()
+            (experts): Qwen3OmniMoeTalkerTextExperts(
+              (act_fn): SiLUActivation()
+            )
+            (shared_expert): Qwen3OmniMoeTalkerTextMLP(
+              (gate_proj): Linear(in_features=1024, out_features=768, bias=False)
+              (up_proj): Linear(in_features=1024, out_features=768, bias=False)
+              (down_proj): Linear(in_features=768, out_features=1024, bias=False)
+              (act_fn): SiLUActivation()
+            )
+            (shared_expert_gate): Linear(in_features=1024, out_features=1, bias=False)
+          )
+          (input_layernorm): Qwen3OmniMoeThinkerTextRMSNorm((1024,), eps=1e-06)
+          (post_attention_layernorm): Qwen3OmniMoeThinkerTextRMSNorm((1024,), eps=1e-06)
+        )
+      )
+      (norm): Qwen3OmniMoeTextRMSNorm((1024,), eps=1e-06)
+      (rotary_emb): Qwen3OmniMoeTalkerRotaryEmbedding()
+      (codec_embedding): Embedding(3072, 1024)
+    )
+    (text_projection): Qwen3OmniMoeTalkerResizeMLP(
+      (linear_fc1): Linear(in_features=2048, out_features=2048, bias=True)
+      (linear_fc2): Linear(in_features=2048, out_features=1024, bias=True)
+      (act_fn): SiLUActivation()
+    )
+    (hidden_projection): Qwen3OmniMoeTalkerResizeMLP(
+      (linear_fc1): Linear(in_features=2048, out_features=2048, bias=True)
+      (linear_fc2): Linear(in_features=2048, out_features=1024, bias=True)
+      (act_fn): SiLUActivation()
+    )
+    (codec_head): Linear(in_features=1024, out_features=3072, bias=False)
+    (code_predictor): Qwen3OmniMoeTalkerCodePredictorModelForConditionalGeneration(
+      (model): Qwen3OmniMoeTalkerCodePredictorModel(
+        (layers): ModuleList(
+          (0-4): 5 x Qwen3OmniMoeTalkerCodePredictorDecoderLayer(
+            (self_attn): Qwen3OmniMoeTalkerCodePredictorAttention(
+              (q_proj): Linear(in_features=1024, out_features=2048, bias=False)
+              (k_proj): Linear(in_features=1024, out_features=1024, bias=False)
+              (v_proj): Linear(in_features=1024, out_features=1024, bias=False)
+              (o_proj): Linear(in_features=2048, out_features=1024, bias=False)
+              (q_norm): Qwen3OmniMoeRMSNorm((128,), eps=1e-06)
+              (k_norm): Qwen3OmniMoeRMSNorm((128,), eps=1e-06)
+            )
+            (mlp): Qwen3OmniMoeMLP(
+              (gate_proj): Linear(in_features=1024, out_features=3072, bias=False)
+              (up_proj): Linear(in_features=1024, out_features=3072, bias=False)
+              (down_proj): Linear(in_features=3072, out_features=1024, bias=False)
+              (act_fn): SiLUActivation()
+            )
+            (input_layernorm): Qwen3OmniMoeRMSNorm((1024,), eps=1e-06)
+            (post_attention_layernorm): Qwen3OmniMoeRMSNorm((1024,), eps=1e-06)
+          )
+        )
+        (norm): Qwen3OmniMoeRMSNorm((1024,), eps=1e-06)
+        (rotary_emb): Qwen3OmniMoeRotaryEmbedding()
+        (codec_embedding): ModuleList(
+          (0-14): 15 x Embedding(2048, 1024)
+        )
+      )
+      (lm_head): ModuleList(
+        (0-14): 15 x Linear(in_features=1024, out_features=2048, bias=False)
+      )
+    )
+  )
+  (code2wav): Qwen3OmniMoeCode2Wav(
+    (pre_transformer): Qwen3OmniMoeCode2WavTransformerModel(
+      (layers): ModuleList(
+        (0-7): 8 x Qwen3OmniMoeCode2WavTransformerLayer(
+          (self_attn): Qwen3OmniMoeCode2WavAttention(
+            (q_proj): Linear(in_features=1024, out_features=1024, bias=False)
+            (k_proj): Linear(in_features=1024, out_features=1024, bias=False)
+            (v_proj): Linear(in_features=1024, out_features=1024, bias=False)
+            (o_proj): Linear(in_features=1024, out_features=1024, bias=False)
+            (q_norm): Identity()
+            (k_norm): Identity()
+          )
+          (mlp): Qwen3OmniMoeCode2WavMlp(
+            (gate_proj): Linear(in_features=1024, out_features=3072, bias=False)
+            (up_proj): Linear(in_features=1024, out_features=3072, bias=False)
+            (down_proj): Linear(in_features=3072, out_features=1024, bias=False)
+            (act_fn): SiLUActivation()
+          )
+          (input_layernorm): Qwen3OmniMoeCode2WavRMSNorm((1024,), eps=1e-05)
+          (post_attention_layernorm): Qwen3OmniMoeCode2WavRMSNorm((1024,), eps=1e-05)
+          (self_attn_layer_scale): Qwen3OmniMoeCode2WavLayerScale()
+          (mlp_layer_scale): Qwen3OmniMoeCode2WavLayerScale()
+        )
+      )
+      (norm): Qwen3OmniMoeRMSNorm((1024,), eps=1e-05)
+      (rotary_emb): Qwen3OmniMoeRotaryEmbedding()
+    )
+    (code_embedding): Embedding(32768, 1024)
+    (upsample): ModuleList(
+      (0-1): 2 x ModuleList(
+        (0): Qwen3OmniMoeCausalTransConvNet(
+          (conv): ConvTranspose1d(1024, 1024, kernel_size=(2,), stride=(2,))
+        )
+        (1): Qwen3OmniMoeConvNeXtBlock(
+          (dwconv): Qwen3OmniMoeCausalConvNet(
+            (conv): Conv1d(1024, 1024, kernel_size=(7,), stride=(1,), groups=1024)
+          )
+          (norm): LayerNorm((1024,), eps=1e-06, elementwise_affine=True)
+          (pwconv1): Linear(in_features=1024, out_features=4096, bias=True)
+          (act): GELU(approximate='none')
+          (pwconv2): Linear(in_features=4096, out_features=1024, bias=True)
+        )
+      )
+    )
+    (decoder): ModuleList(
+      (0): Qwen3OmniMoeCausalConvNet(
+        (conv): Conv1d(1024, 1536, kernel_size=(7,), stride=(1,))
+      )
+      (1): Qwen3OmniMoeCode2WavDecoderBlock(
+        (block): ModuleList(
+          (0): SnakeBeta()
+          (1): Qwen3OmniMoeCausalTransConvNet(
+            (conv): ConvTranspose1d(1536, 768, kernel_size=(16,), stride=(8,))
+          )
+          (2): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(7,), stride=(1,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (3): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(7,), stride=(1,), dilation=(3,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (4): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(7,), stride=(1,), dilation=(9,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(768, 768, kernel_size=(1,), stride=(1,))
+            )
+          )
+        )
+      )
+      (2): Qwen3OmniMoeCode2WavDecoderBlock(
+        (block): ModuleList(
+          (0): SnakeBeta()
+          (1): Qwen3OmniMoeCausalTransConvNet(
+            (conv): ConvTranspose1d(768, 384, kernel_size=(10,), stride=(5,))
+          )
+          (2): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(7,), stride=(1,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (3): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(7,), stride=(1,), dilation=(3,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (4): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(7,), stride=(1,), dilation=(9,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(384, 384, kernel_size=(1,), stride=(1,))
+            )
+          )
+        )
+      )
+      (3): Qwen3OmniMoeCode2WavDecoderBlock(
+        (block): ModuleList(
+          (0): SnakeBeta()
+          (1): Qwen3OmniMoeCausalTransConvNet(
+            (conv): ConvTranspose1d(384, 192, kernel_size=(8,), stride=(4,))
+          )
+          (2): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(7,), stride=(1,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (3): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(7,), stride=(1,), dilation=(3,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (4): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(7,), stride=(1,), dilation=(9,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(192, 192, kernel_size=(1,), stride=(1,))
+            )
+          )
+        )
+      )
+      (4): Qwen3OmniMoeCode2WavDecoderBlock(
+        (block): ModuleList(
+          (0): SnakeBeta()
+          (1): Qwen3OmniMoeCausalTransConvNet(
+            (conv): ConvTranspose1d(192, 96, kernel_size=(6,), stride=(3,))
+          )
+          (2): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(7,), stride=(1,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (3): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(7,), stride=(1,), dilation=(3,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(1,), stride=(1,))
+            )
+          )
+          (4): Qwen3OmniMoeCode2WavDecoderResidualUnit(
+            (act1): SnakeBeta()
+            (conv1): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(7,), stride=(1,), dilation=(9,))
+            )
+            (act2): SnakeBeta()
+            (conv2): Qwen3OmniMoeCausalConvNet(
+              (conv): Conv1d(96, 96, kernel_size=(1,), stride=(1,))
+            )
+          )
+        )
+      )
+      (5): SnakeBeta()
+      (6): Qwen3OmniMoeCausalConvNet(
+        (conv): Conv1d(96, 1, kernel_size=(7,), stride=(1,))
+      )
+    )
+  )
+)
